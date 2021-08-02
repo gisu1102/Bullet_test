@@ -7,6 +7,7 @@ public class PlayerMove : MonoBehaviour
     // Start is called before the first frame update
     Rigidbody2D rigid;
     public float maxSpeed;
+    public float JumpPower;
     SpriteRenderer spriterenderer;
     Animator anim;
     void Awake()
@@ -16,13 +17,18 @@ public class PlayerMove : MonoBehaviour
         anim = GetComponent<Animator>();
     }
 
-    //´Ü¹ßÀûÀÎ ÀÌº¥Æ®´Â Update //¹°¸®Àû 
+    //ë‹¨ë°œì ì¸ ì´ë²¤íŠ¸ëŠ” Update //ë¬¼ë¦¬ì  
     void Update()
     {
-        //¹öÆ°¿¡¼­ ¼Õ ¶ª ¶§ ¼Óµµ °íÁ¤°ª
+        //PlayerJump
+        if (Input.GetButtonDown("Jump"))
+            rigid.AddForce(Vector2.up * JumpPower, ForceMode2D.Impulse);
+
+
+        //ë²„íŠ¼ì—ì„œ ì† ë•” ë•Œ ì†ë„ ê³ ì •ê°’
         if (Input.GetButtonUp("Horizontal"))
         {
-            // rigid.velocity.nomarlized  //´ÜÀ§º¤ÅÍ¸¦ ±¸ÇÒ¶§
+            // rigid.velocity.nomarlized  //ë‹¨ìœ„ë²¡í„°ë¥¼ êµ¬í• ë•Œ
             rigid.velocity = new Vector2(rigid.velocity.normalized.x * 0.5f,
                 rigid.velocity.y);
         }
@@ -36,6 +42,8 @@ public class PlayerMove : MonoBehaviour
         else
             anim.SetBool("IsRunning", true);
     }
+
+
 
     // Update is called once per frame
     void FixedUpdate()
@@ -52,4 +60,9 @@ public class PlayerMove : MonoBehaviour
             rigid.velocity = new Vector2(maxSpeed*(-1), rigid.velocity.y);
 
     }
+
+
+
+
+
 }
